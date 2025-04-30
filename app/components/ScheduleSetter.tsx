@@ -7,7 +7,7 @@ interface ScheduleSetterProps {
   setSelecting: (val: boolean) => void;
   onDone: () => void;
 }
-//
+
 
 const ScheduleSetter: React.FC<ScheduleSetterProps> = ({
   selecting,
