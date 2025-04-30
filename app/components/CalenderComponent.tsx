@@ -22,11 +22,25 @@ const handleSelectSlot = (slotInfo: any) => {
   if (!selectingSchedule) return;
 
   const date = new Date(slotInfo.start);
+
   // Prevent duplicate selection
   if (selectedDates.some(d => isSameDay(d, date))) return;
 
   setSelectedDates(prev => [...prev, date]);
 };
+
+// Detect touch input
+const handleTouchSelectSlot = (event: React.TouchEvent) => {
+  const target = event.target as HTMLElement;
+  const dateAttr = target.getAttribute("data-date"); // Ensure each calendar cell has this
+
+  if (!dateAttr) return;
+
+  const date = new Date(dateAttr);
+  setSelectedDates(prev => [...prev, date]);
+};
+
+
 
 const applySchedule = () => {
   if (selectedDates.length !== 4) {
@@ -123,17 +137,16 @@ const publicHolidays = [
     };
   };
   const dayPropGetter = (date: Date) => {
-    //const isHoliday = publicHolidays.some((holiday) => isSameDay(holiday, date));
     const isSelected = selectedDates.some((selected) => isSameDay(selected, date));
     const isWorkDay = workDays.some((work) => isSameDay(work, date));
   
     let className = '';
-    //if (isHoliday) className = 'holiday-day';
     if (isSelected) className = 'selected-day';
     else if (isWorkDay) className = 'work-day';
   
     return {
       className,
+      onTouchStart: () => handleTouchSelectSlot({ target: { getAttribute: () => date.toISOString() } } as any)
     };
   };
   
@@ -162,21 +175,20 @@ const publicHolidays = [
 />
 </div>
 
-      <Calendar
-        selectable
-        onSelectSlot={handleSelectSlot}
-      
-        localizer={localizer}
-        events={holidayEvents} // <--- this is essential
-        startAccessor="start"
-        endAccessor="end"
-        defaultView="month"
-        views={['month']} // 👈 Only enable the "month" view
-        
-        eventPropGetter={eventStyleGetter}
-        dayPropGetter={dayPropGetter}
-        style={{ height: '100%' }}
-      />
+<Calendar
+  selectable
+  onSelectSlot={handleSelectSlot}
+  localizer={localizer}
+  events={holidayEvents}
+  startAccessor="start"
+  endAccessor="end"
+  defaultView="month"
+  views={['month']}
+  eventPropGetter={eventStyleGetter}
+  dayPropGetter={dayPropGetter}
+  style={{ flex: 1 }} // Use flex to fill remaining space instead of '100%'
+/>
+
       
     </div>
   );

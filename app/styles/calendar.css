@@ -1,11 +1,13 @@
 /* Shared calendar wrapper styling */
 .calendar-wrapper {
   padding: 1rem;
-  width: 100%;
-  height: 85vh;
-  max-height: 85vh;
-  
+  width: 97%;
+  min-height: 80vh; /* changed from fixed height to flexible */
+  display: flex;
+  flex-direction: column;
+
 }
+
 
 /* Base day cell styling */
 .rbc-month-view .rbc-day-bg {
@@ -79,6 +81,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px; /* spacing between buttons */
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+/* Center and style the calendar toolbar (month title + buttons) */
+.rbc-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.rbc-btn-group button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+/* Make the navigation buttons bigger and center them */
+.rbc-btn-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+
+.rbc-btn-group button:hover {
+  background-color: #e0e0e0;
+}
+
+
+
+.touch-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: transparent;
+  touch-action: none;
 }
