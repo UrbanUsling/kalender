@@ -40,7 +40,7 @@ const handleTouchSelectSlot = (event: React.TouchEvent) => {
   setSelectedDates(prev => [...prev, date]);
 };
 
-
+//
 
 const applySchedule = () => {
   if (selectedDates.length !== 4) {
